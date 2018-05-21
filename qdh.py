@@ -67,9 +67,9 @@ while True:
                                 except Exception as e:
                                     client.sendText(receiver, str(e))    
                          
-                            elif 'speed' in text.lower():                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           text.lower() == 'speed':
+                            elif text.lower() == 'speed':
                                 start = time.time()
-                                client.sendText(receiver, "ResultSpeed")
+                                client.sendText(receiver, "TestSpeed")
                                 elapsed_time = time.time() - start
                                 client.sendText(receiver, "%sdetik" % (elapsed_time))
                             
