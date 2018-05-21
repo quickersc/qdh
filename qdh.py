@@ -1,6 +1,8 @@
 # -*- coding: utf-8 -*-
 from linepy import *
 import json, time, random
+from gtts import gTTS
+from googletrans import Translator
 
 client = LineClient()
 #client = LineClient(authToken='AUTH TOKEN')
@@ -16,7 +18,10 @@ cctv={
     "point":{},
     "sidermem":{}
 }
-
+def restart_program():
+    python = sys.executable
+    os.execl(python, python, * sys.argv)
+    
 while True:
     try:
         ops=poll.singleTrace(count=50)
@@ -49,12 +54,25 @@ while True:
                             contact = client.getContact(sender)
                             if text.lower() == 'dody':
                                 client.sendMessage(receiver, 'None', contentMetadata={'mid': sender}, contentType=13)
-                                
-                            elif                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                text.lower() == 'speed':
+                           
+                            elif 'sticker:' in msg.text.lower():
+                                try:
+                                    query = msg.text.replace("sticker:", "")
+                                    query = int(query)
+                                    if type(query) == int:
+                                        client.sendImageWithURL(receiver, 'https://stickershop.line-scdn.net/stickershop/v1/product/'+str(query)+'/ANDROID/main.png')
+                                        client.sendText(receiver, 'https://line.me/S/sticker/'+str(query))
+                                    else:
+                                        client.sendText(receiver, 'gunakan key sticker angka bukan huruf')
+                                except Exception as e:
+                                    client.sendText(receiver, str(e))    
+                         
+                            elif 'speed' in text.lower():                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           text.lower() == 'speed':
                                 start = time.time()
                                 client.sendText(receiver, "ResultSpeed")
                                 elapsed_time = time.time() - start
                                 client.sendText(receiver, "%sdetik" % (elapsed_time))
+                            
                             elif 'spic' in text.lower():
                                 try:
                                     key = eval(msg.contentMetadata["MENTION"])
@@ -63,6 +81,7 @@ while True:
                                     client.sendImageWithURL(receiver, 'http://dl.profile.line.naver.jp/'+a)
                                 except Exception as e:
                                     client.sendText(receiver, str(e))
+                            
                             elif 'scover' in text.lower():
                                 try:
                                     key = eval(msg.contentMetadata["MENTION"])
